@@ -4,13 +4,22 @@ import Footer from './Footer'
 import withSizes from 'react-sizes'
 
 class Layout extends React.Component {
+  componentDidMount() {
+    this.setState({ width: window.innerWidth })
+  }
+
   render() {
     const { children, width } = this.props
+
+    if (!width && !this.state) {
+      console.log('BOTH STATE AND WIDTH ARE NULL')
+      return null
+    }
 
     return (
       <div>
         {children}
-        <Footer width={width} />
+        <Footer width={width || this.state.width} />
       </div>
     )
   }
