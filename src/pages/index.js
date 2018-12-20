@@ -3,8 +3,7 @@ import React from 'react'
 import Layout from '../components/Layout'
 import SEO from '../components/seo'
 
-const IndexVew = props => {
-  console.log('Index page props =', props)
+const IndexView = props => {
   return (
     <div>
       <SEO title="Home" keywords={['gatsby', 'application', 'react']} />
@@ -15,6 +14,6 @@ const IndexVew = props => {
 
 export default props => (
   <Layout>
-    <IndexVew {...props} />
+    <IndexView {...props} />
   </Layout>
 )
