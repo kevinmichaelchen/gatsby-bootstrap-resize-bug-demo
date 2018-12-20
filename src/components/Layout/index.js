@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StaticQuery, graphql } from 'gatsby'
 import withSizes from 'react-sizes'
 import Footer from './Footer'
 
@@ -36,54 +35,44 @@ function computeMediaType({ width, breakpoints }) {
   return ''
 }
 
-const Layout = ({
-  helmetProps,
-  breakpoints,
-  locale,
-  children,
-  widthInfo,
-  width,
-}) => (
-  <StaticQuery
-    query={graphql`
-      {
-        site {
-          siteMetadata {
-            title
-          }
-          buildTime
-        }
-      }
-    `}
-    render={data => {
-      const footerMediaType = computeMediaType({
-        width,
-        breakpoints: {
-          tiny: 320,
-          extraSmall: 480,
-          small: 768,
-          medium: 992,
-          large: 1200,
-        },
-      })
-      const widthClass = breakpoints
-        ? computeMediaType({ width, breakpoints })
-        : ''
-      const newChildrenProps = {
-        widthClass,
-        width,
-      }
-      console.log('width =', width)
-      console.log('widthClass =', widthClass)
-      return (
-        <div>
-          <div>{React.cloneElement(children, newChildrenProps)}</div>
-          <Footer mediaType={footerMediaType} />
-        </div>
-      )
-    }}
-  />
-)
+class Layout extends React.Component {
+  render() {
+    const {
+      helmetProps,
+      breakpoints,
+      locale,
+      children,
+      widthInfo,
+      width,
+    } = this.props
+    const footerMediaType = computeMediaType({
+      width,
+      breakpoints: {
+        tiny: 320,
+        extraSmall: 480,
+        small: 768,
+        medium: 992,
+        large: 1200,
+      },
+    })
+    const widthClass = breakpoints
+      ? computeMediaType({ width, breakpoints })
+      : ''
+    const newChildrenProps = {
+      widthClass,
+      width,
+    }
+    console.log('width =', width)
+    console.log('widthClass =', widthClass)
+
+    return (
+      <div>
+        <div>{React.cloneElement(children, newChildrenProps)}</div>
+        <Footer mediaType={footerMediaType} />
+      </div>
+    )
+  }
+}
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
